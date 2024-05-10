@@ -3,13 +3,18 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
+
+## Read in the dataset
 credit_risk= pd.read_csv("UCI_credit_card.csv")
 print(credit_risk.head())
 df= credit_risk.copy()
+
 # As we seen Column ID has no meaning here so, we will remove it
 df.drop(["ID"], axis=1, inplace= True) #axis=1 -- column removal and inplcae= True --means change in the original data
-# Lets check the statistics of data
+
+## Lets check the statistics of data
 print(df.describe())
+
 # checking for missing values
 print(df.isnull().sum())
 df['EDUCATION'].replace({0:1,1:1,2:2,3:3,4:4,5:1,6:1}, inplace=True)
@@ -17,7 +22,8 @@ print(df.EDUCATION.value_counts())
 df['MARRIAGE'].replace({0:1,1:1,2:2,3:3}, inplace=True)
 
 print(df['MARRIAGE'].value_counts())
-# Lets visualize the target column "default.payment.next.month"
+
+## Lets visualize the target column "default.payment.next.month"
 plt.figure(figsize=(6,6))
 ax = sns.countplot(df['default.payment.next.month'])
 for p in ax.patches:
@@ -33,8 +39,9 @@ plt.xticks(rotation=0)
 plt.ylabel('Count')
 plt.title("Age distribution")
 plt.show()
+
 # With sex columns 
-#Gender (1=male, 2=female)
+# Gender (1=male, 2=female)
 plt.figure(figsize=(6,6))
 ax = sns.countplot('SEX',hue='default.payment.next.month',data=df)
 for p in ax.patches:
@@ -43,6 +50,7 @@ plt.xticks([0,1], labels=["Male", "Female"])
 #plt.xlabel({1:'Male',2:'Feamle'})
 plt.title("Gender Distribution")
 plt.show()
+
 # With EDUCATION columns 
 # (1=graduate school, 2=university, 3=high school, 4=others, 5=unknown, 6=unknown)
 plt.figure(figsize=(10,6))
@@ -52,8 +60,8 @@ for p in ax.patches:
 plt.xticks([0,1,2,3],labels=["graduate school", "university",'high school','others'])
 plt.title("Education Distribution")
 plt.show()
+
 # With MARRIAGE columns 
-#
 plt.figure(figsize=(10,6))
 ax = sns.countplot('MARRIAGE',hue='default.payment.next.month',data=df)
 for p in ax.patches:
@@ -61,6 +69,7 @@ for p in ax.patches:
 plt.xticks([0,1,2],labels=["Married", "single",'others'])
 plt.title("MARRIAGE Distribution")
 plt.show()
+
 # With column 'limit_bal'
 sns.distplot(df.LIMIT_BAL, kde=True)
 plt.subplots(figsize=(20,10))
